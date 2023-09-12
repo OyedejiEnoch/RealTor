@@ -1,0 +1,47 @@
+    // Firestore rules
+
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Listings
+    match /listings/{listing} {
+    	allow read;
+      allow create: if request.auth != null && request.resource.data.imgUrls.size() < 7;
+    	allow delete: if resource.data.userRef == request.auth.uid;
+      allow update: if resource.data.userRef == request.auth.uid;
+    }
+   
+    // Users
+    match /users/{user} {
+    	allow read;
+    	allow create;
+    	allow update: if request.auth.uid == user
+    }
+  }
+}
+
+i.e in listing, its like crud operation, all users and roles can see all listings i.e all properties, 
+but only authenticated users can create a property, 
+if the userId is not eaual to the id of the person who created a propery, they cant update and delete it and also must be authenticated
+
+in users we can all read a user i.e an admin and we can all create a user but we cant update a user if the userId is not equal to the user
+
+    // Storage rules
+
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read;
+      allow write: if
+      request.auth != null &&
+      request.resource.size < 2 * 1024 * 1024 && //2MB
+      request.resource.contentType.matches('image/.*')
+    }
+  }
+}
+
+i.e in storage rules, we all everyone to be able to see the things that has being stored but we can only create something in storage
+or post something if we are authenticated and also what we are posting in a size of 2mb max and what we are posting is an image only
