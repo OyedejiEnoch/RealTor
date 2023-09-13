@@ -14,7 +14,7 @@ const ListingItem = ({ listing, id, onDelete, onEdit }) => {
     >
       <Link to={`/category/${listing.type}/${id}`}>
         <img
-          className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in "
+          className="h-[170px] w-full object-cover hover:scale-105 transition-scale duration-200 ease-in rounded-md"
           loading="lazy"
           // loading lazy means until we reach the image we don't want it to be loaded
           src={listing.imgUrls[0]}

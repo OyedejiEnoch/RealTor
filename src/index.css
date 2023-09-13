@@ -15,3 +15,12 @@ body{
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
   background:#d7f1f1 !important ;
 }
+
+
+html::-webkit-scrolbar{
+  display:none
+}
+
+html{
+  scrollbar-width:none
+}
