@@ -143,7 +143,7 @@ const Home = () => {
             <h2 className="px-3 text-2xl mt-6 font-semibold">
               Places for rent
             </h2>
-            <Link to="/rent">
+            <Link to="/category/rent">
               <p className="px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">
                 Show more places for rent
               </p>
@@ -165,9 +165,9 @@ const Home = () => {
             <h2 className="px-3 text-2xl mt-6 font-semibold">
               Places for Sale
             </h2>
-            <Link to="/rent">
+            <Link to="/category/sale">
               <p className="px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">
-                Show more places for Sle
+                Show more places for Sale
               </p>
             </Link>
 

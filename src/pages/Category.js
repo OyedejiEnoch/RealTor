@@ -12,11 +12,13 @@ import {
 } from "firebase/firestore";
 import ListingItem from "../components/ListingItem";
 import Spinner from "../components/Spinner";
+import { useParams } from "react-router-dom";
 
-const Offers = () => {
+const Category = () => {
   const [loading, setLoading] = useState(true);
   const [listings, setListings] = useState(null);
   const [lastFetched, setLastFetched] = useState(null);
+  const params = useParams();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -24,7 +26,7 @@ const Offers = () => {
         const listingRef = collection(db, "listings");
         const q = query(
           listingRef,
-          where("offer", "==", true),
+          where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
           limit(8)
         );
@@ -50,14 +52,14 @@ const Offers = () => {
     };
     // console.log(listings);
     fetchListings();
-  }, []);
+  }, [params.categoryName]);
 
   // const handleFetchMore = async () => {
   //   try {
   //     const listingRef = collection(db, "listings");
   //     const q = query(
   //       listingRef,
-  //       where("offer", "==", true),
+  //       where("offer", "==", params.categoryName),
   //       orderBy("timestamp", "desc"),
   //       startAfter(lastFetched),
   //       limit(8)
@@ -87,7 +89,9 @@ const Offers = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-3">
-      <h1 className="text-2xl mt-6 text-center font-bold mb-6 ">Offers</h1>
+      <h1 className="text-2xl mt-6 text-center font-bold mb-6 ">
+        {params.categoryName === "rent" ? "Places For Rent" : "Places For Sale"}
+      </h1>
       {loading ? (
         <Spinner />
       ) : listings && listings.length > 0 ? (
@@ -116,10 +120,10 @@ const Offers = () => {
           )}
         </>
       ) : (
-        <p>There are no current offers</p>
+        <p>There are no current Category</p>
       )}
     </div>
   );
 };
 
-export default Offers;
+export default Category;
